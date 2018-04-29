@@ -1,0 +1,86 @@
+<h3>Why is Julia fast?</h3>
+<table>
+  <tbody>
+	<tr>
+	  <td width="35%" style="vertical-align: top; font-size:23px;">
+		Julia:<br>
+<pre><code data-trim data-noescape>
+function myfun(x)
+    y = x
+    if x < 0 
+        y = 0.
+    end
+    return y * y
+end
+</code></pre>
+		C:<br>
+<pre><code data-trim data-noescape>
+float myfun(float x)
+    float y = x;
+    if x < 0 {
+        y = 0.;
+    }
+    return y * y;
+end
+</code></pre>
+<p class="fragment" data-fragment-index="6" style="color:rgb(0,255,138)">
+Native code:<br>
+<pre><code class="fragment" data-fragment-index="6" data-trim data-noescape>
+julia> <mark>@code_native</mark> myfun(3.2)
+        .text
+Filename: REPL[1]
+        pushq   %rbp
+        movq    %rsp, %rbp
+Source line: 3
+        xorpd   %xmm1, %xmm1
+        maxsd   %xmm0, %xmm1
+Source line: 6
+        mulsd   %xmm1, %xmm1
+        movapd  %xmm1, %xmm0
+        popq    %rbp
+        retq
+        nopw    %cs:(%rax,%rax)
+</code></pre>
+	  </p>
+	  </td>
+ 	  <td width="65%" style="vertical-align: top; font-size:23px;">
+		<ul>
+		  <li class="fragment" data-fragment-index="2">Julia has a very sophisticated type
+		  system, but its use is not necessary to achieve good
+		  performances<br>
+		  <pre><code data-trim data-noescape>
+julia> println(typeof(3.2))
+Float64
+</code></pre>
+	  </li>
+		  <li class="fragment" data-fragment-index="3">Julia is JIT-compiled (Just In Time):
+			when first called a function is compiled using the types
+			of the arguments<br>
+			<b style="color:rgb(255,191,0)"> $\Rightarrow$ <code>myfun(3.2)</code> and <code>myfun(3)</code> run different code!</b>
+		  </li>
+          <li class="fragment" data-fragment-index="5">Julia allows to inspect the type-annotated code:
+		  <pre><code data-trim data-noescape>
+julia> <mark>@code_warntype</mark> myfun(3.2)
+Variables:
+  x::Float64
+  y::Float64
+  fy::Float64
+Body:
+  begin 
+      y::Float64 = x::Float64
+      $(Expr(:inbounds, false))
+      fy::Float64 = (Base.sitofp)(Float64, 0)::Float64
+      $(Expr(:inbounds, :pop))
+      unless (Base.or_int)((Base.lt_float)(x::Float64, fy::Float64) <mark>cont...</mark>
+      y::Float64 = 0.0
+      11:
+      return (Base.mul_float)(y::Float64, y::Float64)::Float64
+  end::Float64
+</code></pre>
+<b class="fragment" data-fragment-index="5" style="color:rgb(255,191,0)">  $\Rightarrow$ all types are known, code can be optimized!</b>
+          </li>
+		</ul>
+	  </td>
+	</tr>
+  </tbody>
+</table>

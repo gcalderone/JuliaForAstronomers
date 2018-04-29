@@ -1,0 +1,48 @@
+<h3>Dynamically vs. statycally typed</h3>
+<table>
+  <tbody>
+	<tr>
+	  <td>
+		Python:<br>
+<pre><code data-trim data-noescape>
+# ------------------------
+def myfun(x):
+    y = x
+    if x < 0:
+        y = 0.
+    return y * y
+
+print myfun(3.2)
+</code></pre>
+	  </td>
+	  <td class="fragment" style="width:60%">
+		Types unknown until run time:<br>
+		<img src="resources/cmpLinesOfCode.png">
+	  </td>
+	</tr>
+	<tr>
+	  <td>
+		C:<br>
+<pre><code data-trim data-noescape>
+float myfun(float x)
+    float y = x;
+    if x < 0 {
+        y = 0.;
+    }
+    return y * y;
+end
+
+printf(myfun(3.2));
+</code></pre>
+	  </td>
+	  <td class="fragment" style="width:60%">
+		Types known before compilation:<br>
+		<img src="resources/cmpRunningTime.png">
+	  </td>
+	</tr>
+  </tbody>
+</table>
+
+
+<a style="font-size:18px" href="https://arxiv.org/abs/1409.0252">https://arxiv.org/abs/1409.0252</a>,
+<a style="font-size:18px" href="http://rosettacode.org/wiki/Rosetta_Code">http://rosettacode.org/wiki/Rosetta_Code</a>

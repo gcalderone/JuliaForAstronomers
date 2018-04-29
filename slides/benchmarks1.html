@@ -1,0 +1,63 @@
+<h2>Simplistic benchmarks</h2>
+<h3><i>non-vectorized</i></h3>
+
+<table>
+  <tbody>
+	<tr>
+	  <td width="50%" style="vertical-align: top">
+		Python:
+<pre><code data-trim data-noescape>
+#-----------------------------------------
+import math
+import time
+
+def ex1(n):
+    sum = 0.
+    for i in range(1,n):
+        sum += math.sqrt(i)
+    return sum
+
+elapsed = time.time()
+print(ex1(500000000))
+elapsed = time.time() - elapsed
+print("Elapsed time: ", elapsed)
+</code></pre>
+	  </td>
+	  <td width="50%" style="vertical-align: top">
+IDL:
+<pre><code data-trim data-noescape>
+;-----------------------------------------
+FUNCTION ex1, n
+  sum = 0.d
+  FOR i=1l, n DO $
+     sum += SQRT(i)
+  RETURN, sum
+END
+
+elapsed = SYSTIME(1)
+PRINT, ex1(500000000)
+elapsed = SYSTIME(1) - elapsed
+PRINT, 'Elapsed: ', elapsed
+END
+</code></pre>
+	  </td>
+	</tr>
+	<tr>
+	  <td>
+<pre><code data-trim data-noescape>
+$ python ex1.py
+7453559913819.172
+Elapsed time:  91.33990168571472
+</code></pre>
+	  </td>
+	  <td>
+<pre><code data-trim data-noescape>
+$ idl -e '.r ex1'
+   7.4535599e+12
+Elapsed:        38.900200
+</code></pre>
+	  </td>
+	</tr>
+  </tbody>
+</table>
+

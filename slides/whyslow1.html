@@ -1,0 +1,22 @@
+<h3>Why is Julia <i style="color:rgb(255,60,78)">slow</i> ? (1)</h3>
+
+<p style="font-size: 29px;">JIT compilation: when first called a
+  function is compiled using the types of the arguments</p>
+
+
+<table>
+  <tbody>
+	<tr>
+	  <td width="70%">
+		<img src="resources/repl1.png">
+	  </td>
+	  <td>
+		<ul>
+		  <li class="fragment" style="color:rgb(255,191,0);">When profiling, always run
+		  the function twice!</li>
+		  <li class="fragment" style="color:rgb(255,191,0);">Module compilation takes
+		  $\sim$tens of seconds</li>
+	  </td>
+	</tr>
+  </tbody>
+</table>

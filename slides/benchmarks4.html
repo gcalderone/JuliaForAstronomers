@@ -1,0 +1,53 @@
+<h2>Simplistic benchmarks</h2>
+<h3><i>vectorized & parallel</i></h3>
+
+<table>
+  <tbody>
+    <tr>
+      <td width="50%" style="vertical-align: top">
+Julia:
+<pre><code data-trim data-noescape>
+#-----------------------------------------
+function ex2(n)
+    return sum(sqrt, 1:n)
+end
+
+dummy = ex2(2)
+@time println(ex2(500_000_000))
+</code></pre>
+      </td>
+      <td width="50%" style="vertical-align: top">
+Julia:
+<pre><code data-trim data-noescape>
+#-----------------------------------------
+function ex3(n)
+    return <mark>@parallel (+)</mark> for i = 1:n
+        sqrt(float(i))
+    end
+end
+
+if myid() == 1
+    dummy = ex3(10)
+    @time println(ex3(500_000_000))
+end
+</code></pre>
+      </td>
+    </tr>
+    <tr>
+      <td>
+<pre><code data-trim data-noescape>
+$ julia ex1.jl
+7.453559936179431e12
+  2.243097 seconds
+</code></pre>
+      </td>
+      <td>
+<pre><code data-trim data-noescape>
+$ julia <mark>-p 4</mark> ex3.jl
+7.453559936179548e12
+  0.650843 seconds
+</code></pre>
+      </td>
+    </tr>
+  </tbody>
+</table>

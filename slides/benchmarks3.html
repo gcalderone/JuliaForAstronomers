@@ -1,0 +1,61 @@
+<h2>Simplistic benchmarks</h2>
+<h3><i>vectorized</i></h3>
+
+<table>
+  <tbody>
+	<tr>
+	  <td width="50%" style="vertical-align: top">
+		Python:
+<pre><code data-trim data-noescape>
+#-----------------------------------------
+import numpy as np
+import math
+import time
+
+def ex2(n):
+    a = np.arange(n)+1
+    a = np.sqrt(a)
+    return np.sum(a)
+
+elapsed = time.time()
+print(ex2(500000000))
+elapsed = time.time() - elapsed
+print("Elapsed time: ", elapsed)
+</code></pre>
+	  </td>
+	  <td width="50%" style="vertical-align: top">
+IDL:
+<pre><code data-trim data-noescape>
+;-----------------------------------------
+FUNCTION ex2, n
+  RETURN, TOTAL(SQRT(DOUBLE(LINDGEN(n)+1)))
+END
+
+elapsed = SYSTIME(1)
+PRINT, ex2(500000000)
+elapsed = SYSTIME(1) - elapsed
+PRINT, 'Elapsed: ', elapsed
+END
+</code></pre>
+	  </td>
+	</tr>
+	<tr>
+	  <td>
+<pre><code data-trim data-noescape>
+$ python ex2.py
+7.45355993618e+12
+Elapsed time:  5.990369081497192
+(huge memory allocation)
+</code></pre>
+	  </td>
+	  <td>
+<pre><code data-trim data-noescape>
+$ idl -e '.r ex2'
+   7.4535599e+12
+Elapsed:        1.8536630
+</code></pre>
+	  </td>
+	</tr>
+  </tbody>
+</table>
+

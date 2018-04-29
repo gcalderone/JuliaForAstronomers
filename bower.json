@@ -1,0 +1,27 @@
+{
+  "name": "juliaforastronomers",
+  "version": "3.6.0",
+  "main": [
+    "js/reveal.js",
+    "css/reveal.css"
+  ],
+  "homepage": "http://revealjs.com",
+  "license": "MIT",
+  "description": "A quick introduction to Julia for Astronomers",
+  "authors": [
+    "Giorgio Calderone <giorgio.calderone@inaf.it>"
+  ],
+  "dependencies": {
+    "headjs": "~1.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hakimel/reveal.js.git"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test"
+  ]
+}
