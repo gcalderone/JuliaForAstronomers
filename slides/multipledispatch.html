@@ -1,1 +1,59 @@
 <h2>Multiple dispatch</h2> 
+
+<table>
+  <tbody>
+	<tr>
+	  <td width="50%" style="vertical-align:top">
+		<ul>
+		  <li><b style="color:rgb(255,191,0)">Single dispatch $\equiv$ OOP</b></li>
+		  <li>C++, Java, Python, etc...</li>
+		  <li class="fragment" data-fragment-index="1">Methods <i>belong</i> to data</li>
+		</ul>
+	  </td>
+
+	  <td width="50%" style="vertical-align:top">
+		<ul>
+		  <li><b style="color:rgb(255,191,0)">Multiple dispatch</b></li>
+		  <li>Julia</li>
+		  <li class="fragment" data-fragment-index="1">Methods and data are treated independently</li>
+		</ul>
+	  </td>
+	</tr>
+  </tbody>
+</table>
+
+
+<h3 class="fragment" data-fragment-index="2">Grammar analogy</h3>
+
+<table>
+  <tbody>
+	<tr>
+	  <td class="fragment" data-fragment-index="2" width="50%" style="vertical-align:top">
+		<ul>
+		  <li>Focus on subjects ($\equiv$ class)</li>
+		  <li>All verbs ($\equiv$ methods) can only be applied to a single subject, e.g.</li>
+		  <ul>
+			<li> a <i style="color:rgb(0,255,138)">person</i> <i style="color:rgb(0,255,138)">walks</i>;</li>
+			<li> a <i style="color:rgb(0,255,138)">socket</i> <i style="color:rgb(0,255,138)">sends</i> a data packet;</li>
+			<li> a <i style="color:rgb(0,255,138)">number</i> is <i style="color:rgb(0,255,138)">summed</i> with another number</li>
+			<li>etc...</li>
+		  </ul>
+		</ul>
+	  </td>
+
+	  <td class="fragment" data-fragment-index="3" width="50%" style="vertical-align:top">
+		<ul>
+		  <li>Focus on both subjects and actions</li>
+		  <li>All verbs ($\equiv$ methods) can be applied to any number of subjects, e.g.</li>
+		  <ul>
+			<li> <i style="color:rgb(0,255,138)">walk(person)</i>;</li>
+			<li> <i style="color:rgb(0,255,138)">send(socket, data)</i>;</li>
+			<li> <i style="color:rgb(0,255,138)">add(number, number)</i>;</li>
+			<li> <i style="color:rgb(0,255,138)">add(number, number, number)</i>;</li>
+			<li>etc...</li>
+		  </ul>
+		</ul>
+	  </td>
+	</tr>
+  </tbody>
+</table>
