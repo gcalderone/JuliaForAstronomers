@@ -1,2 +1,41 @@
 <h2>Metaprogramming</h2>
-<h3><i>(generate Julia source code)</i></h3>
+
+<table>
+  <tbody>
+	<tr>
+	  <td width="50%" style="vertical-align:top; align:left">
+		<ul>
+		  <li>Julia supports several types:
+			<ul>
+			  <li> Int
+			  <li> Float
+			  <li> String
+			  <li style="color:rgb(255,191,0)">Expr</li>
+			  <li> etc...
+			</ul>
+			<li class="fragment" data-fragment-index="1">Expr is a representation of
+			  Julia code <p style="color:rgb(255,191,0)">(homoiconicity)</p></li>
+			<li class="fragment" data-fragment-index="1">Julia
+			  provides methods to manipulate Expr data</li>
+		</ul>
+	  </td>
+
+	  <td width="50%" style="vertical-align:top; align:left">
+		<ul>
+		  <li class="fragment" data-fragment-index="2" style="color:rgb(255,191,0)"><b>Julia
+			  can generate and run its own source code</b></li>
+		  <li class="fragment" data-fragment-index="2"><b>At compile time:</b></li>
+		  <ul class="fragment" data-fragment-index="2">
+			<li>by means of macros</li>
+			<li>Julia acts as its own preprocessor</li>
+		  </ul>
+		  <li class="fragment" data-fragment-index="3"><b>At run time:</b></li>
+		  <ul class="fragment" data-fragment-index="3">
+			<li>by means of <code>eval()</code></li>
+			<li>(like other interpreted languages)</li>
+		  </ul>
+		</ul>
+	</tr>
+  </tbody>
+</table>
+

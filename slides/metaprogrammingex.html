@@ -1,0 +1,45 @@
+<h2>Metaprogramming</h2>
+<h3>example: <a target="_blank" href="https://github.com/simonster/Memoize.jl">Memoize</a></h3>
+
+<table>
+  <tbody>
+	<tr>
+	  <td style="vertical-align:top">
+		<ul>
+		  <li>The following code:</li>
+		  <pre style="font-size:14px"><code data-trim data-noescape>
+using Memoize
+<mark>@memoize</mark> function ex2(n)
+    println("Evaluating...")
+    return sum(sqrt, 1:n)
+end
+		  </code></pre>
+		  <li class="fragment" data-fragment-index="2">expands to (at compilation time):
+			<pre style="font-size:14px" class="fragment" data-fragment-index="2"><code data-trim data-noescape>
+function ex2_unmemoized(n)
+    println("Evaluating...")
+    return sum(sqrt, 1:n)
+end
+
+empty!(ObjectIdDict())
+
+ex2(n)::Any = begin
+    if haskey(ObjectIdDict(), (n,))
+        (ObjectIdDict())[(n,)]::
+          Core.Inference.return_type(
+            ex2_unmemoized, typeof((n,)))
+    else 
+        (ObjectIdDict())[(n,)] = ex2_unmemoized(n)
+    end
+end
+		  </code></pre></li>
+		</ul>
+	  </td>
+
+	  <td style="vertical-align:top">
+		<img class="fragment" data-fragment-index="3" src="resources/metaex.png">
+	  </td>
+	</tr>
+  </tbody>
+</table>
+
