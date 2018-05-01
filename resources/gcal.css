@@ -58,6 +58,10 @@ body {
   text-shadow: none;
   word-wrap: break-word; }
 
+.reveal h2 {
+   color: #e7ad52;
+}
+
 .reveal h1 {
   font-size: 3.77em; }
 
@@ -225,8 +229,9 @@ body {
 /*********************************************
  * LINKS
  *********************************************/
+/*  color: #e7ad52; */
 .reveal a {
-  color: #e7ad52;
+  color: #add7ff;
   text-decoration: none;
   -webkit-transition: color .15s ease;
   -moz-transition: color .15s ease;
