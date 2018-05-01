@@ -20,7 +20,7 @@
   </tbody>
 </table>
 
-		<pre><code data-trim data-noescape>
+<pre><code data-trim data-noescape>
 x = linspace(-2pi, 2pi, 100);
 y = 1.5 * sin.(0.3 + 0.7x) ;
 noise = randn(length(x))./2;
@@ -31,4 +31,4 @@ using Gnuplot
     x, y, "w l t 'Model' dt 2 lw 2 lc rgb 'red'",
     x, y+noise, e, "w errorbars t 'Data'",
     term=("png", "gnuplot.png"))
-		</code></pre>
+</code></pre>
