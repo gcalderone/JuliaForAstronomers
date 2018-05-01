@@ -4,11 +4,49 @@
  * By Hakim El Hattab, http://hakim.se
  */
 
-@import url(https://fonts.googleapis.com/css?family=Montserrat:700);
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic,700italic);
-@import url(https://fonts.googleapis.com/css?family=Tangerine:Bold);
 
-section.has-light-background, section.has-light-background h1, section.has-light-background h2, section.has-light-background h3, section.has-light-background h4, section.has-light-background h5, section.has-light-background h6 {
+/* @import url(https://fonts.googleapis.com/css?family=Montserrat:700); */
+@font-face {
+  font-family: 'myHeaderFont';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Montserrat Bold'), local('Montserrat-Bold'), url(../font/JTURjIg1_i6t8kCHKm45_dJE3gnD-w.ttf) format('truetype');
+}
+
+/* @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic,700italic); */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Open Sans Italic'), local('OpenSans-Italic'), url(../font/mem6YaGs126MiZpBA-UFUK0Zdcg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: italic;
+  font-weight: 700;
+  src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url(../font/memnYaGs126MiZpBA-UFUKWiUNhrIqY.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans Regular'), local('OpenSans-Regular'), url(../font/mem8YaGs126MiZpBA-UFVZ0e.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(../font/mem5YaGs126MiZpBA-UN7rgOUuhs.ttf) format('truetype');
+}
+
+
+section.has-light-background, 
+section.has-light-background h1, 
+section.has-light-background h2, 
+section.has-light-background h3, 
+section.has-light-background h4, 
+section.has-light-background h5, 
+section.has-light-background h6 {
   color: #222; }
 
 /*********************************************
@@ -50,7 +88,7 @@ body {
 .reveal h6 {
   margin: 0 0 20px 0;
   color: #dddddd;
-  font-family: "Montserrat", Impact, sans-serif;
+  font-family: "myHeaderFont", Impact, sans-serif;
   font-weight: normal;
   line-height: 1.2;
   letter-spacing: normal;
@@ -231,7 +269,8 @@ body {
  *********************************************/
 /*  color: #e7ad52; */
 .reveal a {
-  color: #add7ff;
+  font-family: "Open Sans", sans-serif;
+  color: #0dd7ff;
   text-decoration: none;
   -webkit-transition: color .15s ease;
   -moz-transition: color .15s ease;
