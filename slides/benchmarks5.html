@@ -1,0 +1,55 @@
+<h2>Simplistic benchmarks</h2>
+<h3><i>vectorized & parallel</i></h3>
+
+<table>
+  <tbody>
+    <tr>
+      <td width="50%" style="vertical-align: top">
+Julia:
+<pre><code data-trim data-noescape>
+#-----------------------------------------
+function ex2(n)
+    return sum(sqrt, 1:n)
+end
+
+dummy = ex2(2)
+@time println(ex2(500_000_000))
+</code></pre>
+      </td>
+      <td width="50%" style="vertical-align: top">
+Julia:
+<pre><code data-trim data-noescape>
+#-----------------------------------------
+using Base.Threads
+function ex4(n)
+    arr = fill(0., nthreads())
+   <mark>@threads</mark> for i = 1:n   
+        arr[threadid()] += sqrt(float(i))
+    end
+    return sum(arr)
+end  
+
+dummy = ex4(10)
+@time println(ex4(500_000_000))
+</code></pre>
+      </td>
+
+    </tr>
+    <tr>
+      <td>
+<pre><code data-trim data-noescape>
+$ julia ex1.jl
+7.453559936179431e12
+  2.243097 seconds
+</code></pre>
+      </td>
+      <td>
+<pre><code data-trim data-noescape>
+$ <mark>JULIA_NUM_THREADS=4</mark> julia ex4.jl
+7.453559936180016e12
+  0.732246 seconds (23.43 k allocations: 1.394 MiB)
+</code></pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
