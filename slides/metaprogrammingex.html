@@ -16,27 +16,26 @@ end
 		  </code></pre>
 		  <li class="fragment" data-fragment-index="2">expands to (at compilation time):
 			<pre style="font-size:14px" class="fragment" data-fragment-index="2"><code data-trim data-noescape>
-function ex2_unmemoized(n)
+function ##ex2_unmemoized(n)
     println("Evaluating...")
     return sum(sqrt, 1:n)
 end
 
-empty!(ObjectIdDict())
+empty!(IdDict{Any,Any}())
 
 ex2(n)::Any = begin
-    if haskey(ObjectIdDict(), (n,))
-        (ObjectIdDict())[(n,)]::
-          Core.Inference.return_type(
-            ex2_unmemoized, typeof((n,)))
-    else 
-        (ObjectIdDict())[(n,)] = ex2_unmemoized(n)
+    if haskey(IdDict{Any,Any}(), (n,))
+       (IdDict{Any,Any}())[(n,)]::(Core.Compiler).return_type(
+              ##ex2_unmemoized, typeof((n,)))
+    else
+       (IdDict{Any,Any}())[(n,)] = ##ex2_unmemoized(n)
     end
 end
 		  </code></pre></li>
 		</ul>
 	  </td>
 
-	  <td style="vertical-align:top">
+	  <td style="vertical-align:top" width="5000px">
 		<img class="fragment" data-fragment-index="3" src="resources/metaex.png">
 	  </td>
 	</tr>

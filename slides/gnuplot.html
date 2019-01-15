@@ -21,14 +21,14 @@
 </table>
 
 <pre><code data-trim data-noescape>
-x = linspace(-2pi, 2pi, 100);
-y = 1.5 * sin.(0.3 + 0.7x) ;
-noise = randn(length(x))./2;
-e = 0.5 * ones(x);
+x = range(-2pi, stop=2pi, length=100)
+y = @. 1.5 * sin(0.3 + 0.7 * x)
+noise = 0.5 .* randn(length(x))
+e = fill(0.5, length(x))
 
 using Gnuplot
 @gp(tit="My title", xr=(-7,7), xlab="X label", ylabel="Y label",
     x, y, "w l t 'Model' dt 2 lw 2 lc rgb 'red'",
-    x, y+noise, e, "w errorbars t 'Data'",
-    term=("png", "gnuplot.png"))
+    x, y.+noise, e, "w errorbars t 'Data'")
+save(term="png", output="gnuplot.png")
 </code></pre>
