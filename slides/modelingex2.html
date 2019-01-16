@@ -1,14 +1,14 @@
 <h2>Model fitting example</h2>
 
 <pre><code data-trim data-noescape style="font-size:12px">
-show(bestfit)
-@gp  "set multiplot layout 2,1" "set bar 0"                                                                        :-
-@gp :- x.d1 data.data data.uncert "w yerrorbar t 'Data' lc rgb 'black'"                                            :-
-@gp :- x.d1 model.ceval[:line1].result + bestfit.param[:offset__val].val "w l t 'Line 1' lw 2 lc rgb 'dark-green'" :-
-@gp :- x.d1 model.ceval[:line2].result + bestfit.param[:offset__val].val "w l t 'Line 2' lw 2 lc rgb 'blue'"       :-
-@gp :- x.d1 model.result "w lines t 'Best fit model' lw 2 lc rgb 'red'"                                            :-
-@gp :- 2 x.d1 x.d1 .* 0 "w l notit lw 2 dt 2 lc rgb 'purple'"                                                      :-
-@gp :- x.d1 (model.result-data.data) ./ data.uncert fill(1., size(x)) "w yerror notit lc rgb 'black'"             
+using Gnuplot	
+@gp  "set multiplot layout 2,1" "set bar 0"                                                            :-
+@gp :- x[1] data.measure data.uncert "w yerrorbar t 'Data' lc rgb 'black'"                             :-
+@gp :- x[1] model(:line1) .+ bestfit.param[:offset__val].val "w l t 'Line 1' lw 2 lc rgb 'dark-green'" :-
+@gp :- x[1] model(:line2) .+ bestfit.param[:offset__val].val "w l t 'Line 2' lw 2 lc rgb 'blue'"       :-
+@gp :- x[1] model() "w lines t 'Best fit model' lw 2 lc rgb 'red'"                                     :-
+@gp :- 2 x[1] x[1] .* 0 "w l notit lw 2 dt 2 lc rgb 'purple'"                                          :-
+@gp :- x[1] (model().-data.measure) ./ data.uncert fill(1., length(x)) "w yerror notit lc rgb 'black'"
 </code></pre>
 
 <div style="vertical-align:top">

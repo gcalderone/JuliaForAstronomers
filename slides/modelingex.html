@@ -1,23 +1,23 @@
 <h2>Model fitting example</h2>
  
 <pre><code data-trim data-noescape>
-using ModelFitting
+using Random, DataFitting, DataFittingBasics
 
-# Prepare component list
-clist = ComponentList(
-    :offset => ModelFitting.Components.SimpleParam(4),
-    :line1  => ModelFitting.Components.Gaussian(1.1 , 4.5, 0.5),
-    :line2  => ModelFitting.Components.Gaussian(0.52, 5  , 1.0))
+# Prepare the model
+model = Model(
+    :offset => SimpleParam(4),
+    :line1  => DataFittingBasics.Gaussian(1.1 , 4.5, 0.5),
+    :line2  => DataFittingBasics.Gaussian(0.52, 5  , 1.0))
 
 # Prepare data domain and compile the model
 x = Domain(1:0.05:10)
-model = Model(clist, x, :(offset + line1 + line2))
+prepare!(model, x, :(offset + line1 + line2))
 
 # add noise and and create a Measure object
 rng = MersenneTwister(0);
-noise = maximum(model.result) * 0.01
-data = Measures(model.result + noise * randn(rng, length(model.result)), noise);
+noise = maximum(model(1)) * 0.01
+data = Measures(model(1) + noise * randn(rng, length(model(1))), noise)
 
 # Fit model to data
-@time bestfit = fit(ModelFitting_LsqFit.Minimizer(), clist, model, data);
+@time bestfit = fit!(model, data)
 </code></pre>
