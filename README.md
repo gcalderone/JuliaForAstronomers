@@ -225,3 +225,23 @@ println(ex4(2))
 ```
 
 ## My first plot
+With the core Julia language you can only do slightly more than arithmetics, basic statistics, and simple input/outputs on files.  Functionalities may be added to Julia by adding **packages**
+
+The most trending ones are listed [here](https://github.com/trending/julia), while the complete list is available [here](https://juliaobserver.com/packages).  Be aware that many of the packages are not maintained since the Julia language evolved rather quickly in the last few years introducing important breaking changes.
+
+Since August 2018 versin 1.0 is released, and there shouldn't be any other breaking change in the future, hence the package ecosystem will settle on its long term state.
+
+To produce your first plot in Julia you have several [options](https://juliaobserver.com/categories/Infographics).  I prefer to use the [Gnuplot.jl](https://github.com/gcalderone/Gnuplot.jl/) package (NOTE: Julia package usually have the `.jl` suffix).
+
+To install `Gnuplot.jl` you need to have a working [Gnuplot](http://gnuplot.info/) installation, then you can start julia, type the `]` character (start the package manager) and type:
+```julia
+dev https://github.com/gcalderone/ReusePatterns.jl
+dev https://github.com/gcalderone/Gnuplot.jl
+```
+(the above procedure will be simplified in the coming days...).
+
+Now you're ready for your first plot:
+```julia
+using Gnuplot
+@gp 1:10
+```
