@@ -54,9 +54,10 @@ To quit your Julia session simply hit `Ctrl-d`.
 
 
 ## Is Julia really fast?
-Try youself with the following code snippets calculating the sum of the square root fo the first 500000000 integer numbers:
+Try youself with the following code snippets calculating the sum of the square root of the first 500,000,000 integer numbers:
 
 ### C
+Type the following code in a file named `ex1.c`:
 ```C
 #include <stdio.h>
 #include <math.h>
@@ -79,5 +80,92 @@ Compile and run with:
 gcc -O3 -o ex1 ex1.c -lm
 time ./ex1
 ```
+
+### Python
+
+Core language:
+```python
+import math
+import time
+
+def ex1(n):
+    sum = 0.
+    for i in range(1,n):
+        sum += math.sqrt(i)
+    return sum
+
+elapsed = time.time()
+print(ex1(500000000))
+elapsed = time.time() - elapsed
+print("Elapsed time: ", elapsed)
+```
+
+With Numpy:
+```python
+import numpy as np
+import math
+import time
+
+def ex2(n):
+    a = np.arange(n)+1
+    a = np.sqrt(a)
+    return np.sum(a)
+
+elapsed = time.time()
+print(ex2(500000000))
+elapsed = time.time() - elapsed
+print("Elapsed time: ", elapsed)
+```
+
+With Numba:
+```python
+from numba import jit
+import math
+import time
+
+@jit
+def ex3(n):
+    sum = 0.
+    for i in range(1,n):
+        sum += math.sqrt(i)
+    return sum
+
+elapsed = time.time()
+print(ex3(500000000))
+elapsed = time.time() - elapsed
+print("Elapsed time: ", elapsed)
+```
+
+### IDL
+
+With explicit loop:
+```idl
+.r
+FUNCTION ex1, n
+  sum = 0.d
+  FOR i=1l, n DO $
+     sum += SQRT(i)
+  RETURN, sum
+END
+
+elapsed = SYSTIME(1)
+PRINT, ex1(500000000)
+elapsed = SYSTIME(1) - elapsed
+PRINT, 'Elapsed: ', elapsed
+```
+
+With implicit loop:
+```idl
+.r
+FUNCTION ex2, n
+  RETURN, TOTAL(SQRT(DOUBLE(LINDGEN(n)+1)))
+END
+
+elapsed = SYSTIME(1)
+PRINT, ex2(500000000)
+elapsed = SYSTIME(1) - elapsed
+PRINT, 'Elapsed: ', elapsed
+```
+
 
 ## My first plot
