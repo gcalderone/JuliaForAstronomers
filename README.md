@@ -2,6 +2,8 @@
 
 The material in this repository grow out of a few talks entitled [Julia for Astronomers](https://gcalderone.github.io/JuliaForAstronomers/) I gave in Italy and Switzerland.  Here you will find all the code shown in the talks, as well as a brief introduction on how to start using Julia.
 
+**IMPORTANT NOTE**: this file updated each time I have free time, so come back to check for new material.  Also, if you find any error, or would like to suggest new material, fell free to send me an email or submit a PR.
+
 ## What is Julia ?
 
 Julia is a new, MIT-licensed (free and open source) and multiplatform (Linux, OSX, Windows) programming language specifically designed for numerical computation.  For Astronomers, the most important Julia features are:
@@ -255,6 +257,25 @@ Have a look at [Gnuplot.jl](https://github.com/gcalderone/Gnuplot.jl/) documenta
 
 With the core Julia language you can only do slightly more than arithmetics, basic statistics, and simple input/outputs on files.  New functionalities must be added to Julia with custom **packages**.
 
-The most trending packages are listed [here](https://github.com/trending/julia), while the complete list is available [here](https://juliaobserver.com/packages).  Be aware that many of the packages are not maintained since the Julia language evolved rather quickly in the last few years introducing important breaking changes.  Since August 2018 versin 1.0 is released, and there shouldn't be any other breaking change in the future, hence the package ecosystem will soon settle on its long term state.
+The most trending packages are listed [here](https://github.com/trending/julia), while the complete list is available [here](https://juliaobserver.com/packages) (NOTE: Julia package usually have the `.jl` suffix).  Be aware that many of the packages are no longer maintained since the Julia language evolved rather quickly in the last few years introducing important breaking changes.  Since August 2018 versin 1.0 is released, and there shouldn't be any other breaking change in the future, hence the package ecosystem will soon settle on its long term state.
 
-(NOTE: Julia package usually have the `.jl` suffix).
+There are many useful packages available online.  The ones I think are mandatory to start being proficient in Julia are the one listed below.  Feel free to install as many packages as you like, the package manager will take proper care of all the dependencies, and you can always delete them later if you find they are not useful.
+
+The code to install the minimum set of packages is as follows (remember to activate the package manager by pressing the `]` button):
+```julia
+add FITSIO
+add AstroLib
+add DataFrames
+add WCS
+add TestImages
+add ImageMagick
+add MultivariateStats
+add CoordinateTransformations
+add TextParse
+add StatsBase
+add SparseArrays
+dev https://github.com/JuliaAstro/SkyCoords.jl
+dev https://github.com/gcalderone/ReusePatterns.jl
+dev https://github.com/gcalderone/Gnuplot.jl
+dev https://github.com/gcalderone/SortMerge.jl
+```
