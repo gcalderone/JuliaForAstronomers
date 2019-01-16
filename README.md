@@ -235,16 +235,23 @@ To produce your first plot in Julia you have several [options](https://juliaobse
 
 To install `Gnuplot.jl` you need to have a working [Gnuplot](http://gnuplot.info/) installation, then you can start julia, type the `]` character (start the package manager) and type:
 ```julia
-dev https://github.com/gcalderone/ReusePatterns.jl
-dev https://github.com/gcalderone/Gnuplot.jl
+(v1.0) pkg> dev https://github.com/gcalderone/ReusePatterns.jl
+(v1.0) pkg> dev https://github.com/gcalderone/Gnuplot.jl
 ```
 (the above procedure will be simplified in the coming days...).
 
 Now you're ready for your first plot:
 ```julia
-using Gnuplot
-@gp 1:10
-save(term="png", output="MyFirstPlot.png")
+julia> using Gnuplot
+julia> @gp 1:10
 ```
+
+A slightly more interesting example:
+```julia
+julia> X = -3:0.1:3
+julia> @gsp X X reshape([exp.(-x.^2 -y.^2) for x in X for y in X], length(X), length(X)) "w pm3d"
+julia> save(term="png", output="MyFirstPlot.png")
+```
+![MyFirstPlot](resources/MyFirstPlot.png)
 
 Have a look at [Gnuplot.jl](https://github.com/gcalderone/Gnuplot.jl/) documentation for further examples.

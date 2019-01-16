@@ -20,8 +20,9 @@ dummy = ex2(2)
 Julia:
 <pre><code data-trim data-noescape>
 #-----------------------------------------
+using Distributed
 function ex3(n)
-    return <mark>@parallel (+)</mark> for i = 1:n
+    return <mark>@distributed (+)</mark> for i = 1:n
         sqrt(float(i))
     end
 end
