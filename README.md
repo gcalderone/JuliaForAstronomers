@@ -244,4 +244,5 @@ Now you're ready for your first plot:
 ```julia
 using Gnuplot
 @gp 1:10
+save(term="png", output="MyFirstPlot.png")
 ```
