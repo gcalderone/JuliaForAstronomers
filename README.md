@@ -83,7 +83,7 @@ time ./ex1
 
 ### Python
 
-Core language:
+Explicit loop:
 ```python
 import math
 import time
@@ -138,7 +138,7 @@ print("Elapsed time: ", elapsed)
 
 ### IDL
 
-With explicit loop:
+Explicit loop:
 ```idl
 .r
 FUNCTION ex1, n
@@ -154,7 +154,7 @@ elapsed = SYSTIME(1) - elapsed
 PRINT, 'Elapsed: ', elapsed
 ```
 
-With implicit loop:
+Implicit loop:
 ```idl
 .r
 FUNCTION ex2, n
@@ -167,5 +167,61 @@ elapsed = SYSTIME(1) - elapsed
 PRINT, 'Elapsed: ', elapsed
 ```
 
+
+### Julia
+
+Explicit loop:
+```julia
+function ex1(n)
+    sum = 0.
+    for i in 1:n
+        sum += sqrt(i)
+    end
+    return sum
+end
+
+println(ex1(2))  # warm up
+@time println(ex1(500_000_000))
+```
+
+Implicit loop:
+```julia
+function ex2(n)
+    return sum(sqrt, 1:n)
+end
+
+println(ex2(2))  # warm up
+@time println(ex2(500_000_000))
+```
+
+Parallel processing (start julia with: `julia -p 4`):
+```julia
+using Distributed
+function ex3(n)
+    return @distributed (+) for i = 1:n
+        sqrt(float(i))
+    end
+end
+
+if myid() == 1
+	println(ex3(2))  # warm up
+    @time println(ex3(500_000_000))
+end
+```
+
+Multithreading (start julia with: `JULIA_NUM_THREADS=4 julia`):
+```julia
+using Base.Threads
+function ex4(n)
+    arr = fill(0., nthreads())
+    @threads for i = 1:n
+        arr[threadid()] += sqrt(float(i))
+    end
+    return sum(arr)
+end
+
+println(ex4(2))
+@time println(ex4(500_000_000))
+```
 
 ## My first plot
