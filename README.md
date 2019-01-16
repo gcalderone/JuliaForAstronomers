@@ -246,3 +246,5 @@ using Gnuplot
 @gp 1:10
 save(term="png", output="MyFirstPlot.png")
 ```
+
+Have a look at [Gnuplot.jl](https://github.com/gcalderone/Gnuplot.jl/) documentation for further examples.
