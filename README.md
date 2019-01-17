@@ -231,10 +231,8 @@ To produce your first plot in Julia you should install one or more [plotting pac
 
 To install `Gnuplot.jl` you need to have a working [Gnuplot](http://gnuplot.info/) installation.  Then you can start julia, type the `]` character (start the package manager) and type:
 ```julia
-dev https://github.com/gcalderone/ReusePatterns.jl
-dev https://github.com/gcalderone/Gnuplot.jl
+add Gnuplot
 ```
-(the above procedure will be simplified in the coming days...).
 
 Now you're ready for your first plot:
 ```julia
@@ -263,19 +261,29 @@ There are many useful packages available online.  The ones I think are mandatory
 
 The code to install the minimum set of packages is as follows (remember to activate the package manager by pressing the `]` button):
 ```julia
-add FITSIO
-add AstroLib
-add DataFrames
-add WCS
-add TestImages
-add ImageMagick
-add MultivariateStats
-add CoordinateTransformations
-add TextParse
-add StatsBase
-add SparseArrays
-dev https://github.com/JuliaAstro/SkyCoords.jl
-dev https://github.com/gcalderone/ReusePatterns.jl
-dev https://github.com/gcalderone/Gnuplot.jl
-dev https://github.com/gcalderone/SortMerge.jl
+add DataFrames TextParse StatsBase Images ImageMagick ImageView TestImages
+add FITSIO AstroLib WCS CoordinateTransformations
+dev SkyCoords
+add Gnuplot SortMerge
+dev https://github.com/gcalderone/AstroRecipes.jl
 ```
+
+The `add` command downloads the latest *stable* version of the package, while `dev` downloads the latest package commit.  For instance, the `AstroRecipes` is currently not supposed to have stable releases since it is evolving very quickly, hence we use the development version.  Both commands install also the appropriate dependencies.
+
+If you wish to check and download new versions of the installed packages simply use the `update` command (as always, use the `]` character to activate the package manager).
+
+The first time you use these packages you may see Julia freezing for ~tens of seconds, since it is precompiling the associated modules.  This is perfectly normal, and is done only once.
+
+
+## Read a FITS file and show an image
+
+Download a FITS file containing an image extension, e.g.:
+https://www.spacetelescope.org/static/projects/fits_liberator/datasets/eagle/502nmos.zip
+
+Then from Julia:
+```julia
+using FITSIO, ImageView
+f = FITS("502nmos.fits")
+imshow(read(f[1]))
+```
+use the right mouse button to open the `Contrast` window. Then use `Ctrl+` mouse wheel to zoom in and out, and drag with the left button to pan the image.  Finally, with `Ctrl+` left button you may zoom in a specific region of the image.
