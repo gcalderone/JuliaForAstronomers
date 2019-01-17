@@ -277,10 +277,7 @@ The first time you use these packages you may see Julia freezing for ~tens of se
 
 ## Read a FITS file and show an image
 
-Download a FITS file containing an image extension, e.g.:
-https://www.spacetelescope.org/static/projects/fits_liberator/datasets/eagle/502nmos.zip
-
-Then from Julia:
+Download a FITS file containing an image extension (e.g. [here](https://www.spacetelescope.org/static/projects/fits_liberator/datasets/eagle/502nmos.zip), to be unzipped...), then from Julia:
 ```julia
 using FITSIO, ImageView
 f = FITS("502nmos.fits")
