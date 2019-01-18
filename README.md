@@ -10,12 +10,16 @@ Julia is a new, MIT-licensed (free and open source) and multiplatform (Linux, OS
 - the very high performances, approaching that of C or FORTRAN.
 - the ease of use;
 
-Besides the above mentioned aspects Julia provides much more facilities, some of which will be discussed here.
+Besides the above mentioned aspects Julia provides many further facilities, some of which will be discussed here.
 
 The best places to start learning about Julia are:
 - the reference website: https://julialang.org/;
 - the official manual: https://docs.julialang.org/en/v1/;
 - the community blog: https://discourse.julialang.org/;
+
+
+The Julia concept and language design principles are discussed in [Bezanson et al 2012](http://karpinski.org/images/2012,bezanson,julia%20-%20a%20fast%20dynamic%20language%20for%20technical%20computing.pdf) and [Bezanson et al. 2017](http://karpinski.org/images/2017,bezanson,julia%20-%20a%20fresh%20approach%20to%20technical%20computing.pdf).
+
 
 ## Installing Julia and first run
 Go to https://julialang.org/downloads/ and download the appropriate package.  Avoid installing versions prior to 1.0.
