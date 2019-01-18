@@ -83,7 +83,7 @@ Just type: `code_native(g, (Int,))`, you'll obtain:
 imulq   $9765625, %rdi, %rax
 addq    $-2441406, %rax
 ```
-The above code is the *native* machine code being executed by your computer each time you call the `g(x)` function: a multiplication and an addition.  Believe it or not, Julia found the simple formula `-2441406 + 9765625 * x` to be the fastest and simple way to calculate `g(x)`.
+The above code is the *native* machine code being executed by your computer each time you call the `g(x)` function: a multiplication and an addition.  Believe it or not, Julia found the simple formula `-2441406 + 9765625 * x` to be the fastest way to calculate `g(x)`.
 
 
 
