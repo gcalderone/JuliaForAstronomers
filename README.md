@@ -67,10 +67,10 @@ Let's define two very simple functions, `f(x)` and `g(x)`, as follows:
 ```julia
 f(x) = 5x-1
 function g(x)
-	for i = 1:10
-		x = f(x)
-	end
-	x
+    for i = 1:10
+        x = f(x)
+    end
+    x
 end
 ```
 Can you guess what is the value of `g(1)` ?  and `g(2)` ?
@@ -83,7 +83,7 @@ Just type: `code_native(g, (Int,))`, you'll obtain:
 imulq   $9765625, %rdi, %rax
 addq    $-2441406, %rax
 ```
-The above code is the *native* machine code being executed by your computer each time you call the `g(x)` function.  Believe it or not, Julia found the simple formula `-2441406 + 9765625 * x` to be the fastest and simple way to calculate `g(x)`.
+The above code is the *native* machine code being executed by your computer each time you call the `g(x)` function: a multiplication and an addition.  Believe it or not, Julia found the simple formula `-2441406 + 9765625 * x` to be the fastest and simple way to calculate `g(x)`.
 
 
 
