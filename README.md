@@ -60,7 +60,34 @@ To quit your Julia session simply hit `Ctrl-d`.
 
 
 ## Is Julia really fast?
-Try youself with the following code snippets calculating the sum of the square root of the first 500,000,000 integer numbers:
+
+Before tackling the actual comparison between Julia and other programming languages I'll show a very simple example taken from [Bezanson et al. 2017](http://karpinski.org/images/2017,bezanson,julia%20-%20a%20fresh%20approach%20to%20technical%20computing.pdf):
+
+Let's define two very simple functions, `f(x)` and `g(x)`, as follows:
+```julia
+f(x) = 5x-1
+function g(x)
+	for i = 1:10
+		x = f(x)
+	end
+	x
+end
+```
+Can you guess what is the value of `g(1)` ?  and `g(2)` ?
+In general, can you find a simple way to calculate `g(x)` for any value of `x`?
+
+Well, Julia does it pretty easily!
+
+Just type: `code_native(g, (Int,))`, you'll obtain:
+```
+imulq   $9765625, %rdi, %rax
+addq    $-2441406, %rax
+```
+The above code is the *native* machine code being executed by your computer each time you call the `g(x)` function.  Believe it or not, Julia found the simple formula `-2441406 + 9765625 * x` to be the fastest and simple way to calculate `g(x)`.
+
+
+
+Now let's try the following code snippets calculating the sum of the square root of the first 500,000,000 integer numbers, in different languages:
 
 ### C
 Type the following code in a file named `ex1.c`:
@@ -199,6 +226,8 @@ end
 println(ex2(2))  # warm up
 @time println(ex2(500_000_000))
 ```
+Notice there is no significant difference between the explicit and implicit loop versions!
+
 
 Parallel processing (start julia with: `julia -p 4`):
 ```julia
