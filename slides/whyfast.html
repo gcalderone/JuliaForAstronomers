@@ -27,6 +27,7 @@ end
 Native code:<br>
 <pre><code class="fragment" data-fragment-index="6" data-trim data-noescape>
 julia> <mark>@code_native</mark> myfun(3.2)
+.text
 vxorpd	%xmm1, %xmm1, %xmm1
 vmaxsd	%xmm0, %xmm1, %xmm0
 vmulsd	%xmm0, %xmm0, %xmm0
@@ -52,19 +53,18 @@ Float64
           <li class="fragment" data-fragment-index="5">Julia allows to inspect the type-annotated code:
 		  <pre style="font-size:13px;"><code data-trim data-noescape>
 julia> @code_warntype myfun(3.2)
+Variables
+  #self#::Core.Compiler.Const(myfun, false)
+  x::Float64
+  y::Float64
+
 Body::Float64
-3 1 ─ %1  = π (0.0, Float64)                          │╻  <
-  │   %2  = (Base.lt_float)(x, %1)::Bool              ││╻  <
-  │   %3  = π (0.0, Float64)                          ││ 
-  │   %4  = (Base.eq_float)(x, %3)::Bool              ││╻  ==
-  │   %5  = (Base.and_int)(%4, true)::Bool            ││╻  &
-  │   %6  = (Base.and_int)(%5, false)::Bool           │││
-  │   %7  = (Base.or_int)(%2, %6)::Bool               ││╻  |
-  └──       goto #3 if not %7                         │  
-  2 ─       nothing                                   │  
-6 3 ─ %10 = φ (#2 => 0.0, #1 => _2)::Float64          │  
-  │   %11 = (Base.mul_float)(%10, %10)::Float64       │╻  *
-  └──       return %11                                │  
+1 ─      (y = x)
+│   %2 = (x < 0)::Bool
+└──      goto #3 if not %2
+2 ─      (y = 0.0)
+3 ┄ %5 = (y * y)::Float64
+└──      return %5
 </code></pre>
 <b class="fragment" data-fragment-index="5" style="color:rgb(255,191,0)">  $\Rightarrow$ all types are known, code can be optimized!</b>
           </li>
