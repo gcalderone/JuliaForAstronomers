@@ -1,0 +1,49 @@
+<h2>PyCall, Astropy example</h2>
+
+
+<table>
+  <tbody>
+    <tr>
+      <td width="45%" style="font-size:0.8em; vertical-align: top">
+<pre><code data-trim data-noescape>
+using PyCall, Gnuplot
+
+# Call a python function
+math = pyimport("math")
+math.sin(math.pi / 4)
+
+# Run python code
+py"""
+import numpy as np
+
+def sinpi(x):
+    return np.sin(np.pi * x)
+"""
+py"sinpi"(1)
+
+# from astroquery.simbad import Simbad
+Simbad = pyimport("astroquery.simbad").Simbad
+pos = Simbad.query_object("M31")
+</code></pre>
+	  </td>
+
+      <td width="55%" style="font-size:0.8em; vertical-align: top">
+<pre><code data-trim data-noescape>
+# import astropy.coordinates as coords
+@pyimport astropy.coordinates as coords
+SDSS = pyimport("astroquery.sdss").SDSS
+
+pos = coords.SkyCoord("0h8m05.63s +14d50m23.3s")
+xid = SDSS.query_region(pos, spectro=true)
+sp = SDSS.get_spectra(matches=xid)
+
+loglam = convert(Vector{Float32}, sp[2].data["loglam"])
+flux = convert(Vector{Float32}, sp[2].data["flux"])
+@gp 10 .^ loglam flux "w l"	  
+</code></pre>
+
+<img src="resources/sdss_spec.png">
+	  </td>
+	</tr>
+  </tbody>
+</table>
