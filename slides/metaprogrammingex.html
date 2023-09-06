@@ -14,8 +14,8 @@ using Memoize
     return sum(sqrt, 1:n)
 end
 		  </code></pre>
-		  <li class="fragment" data-fragment-index="2">expands to (at compilation time):
-			<pre style="font-size:14px" class="fragment" data-fragment-index="2"><code data-trim data-noescape>
+		  <li>expands to (at compilation time):
+			<pre style="font-size:14px"><code data-trim data-noescape>
 function ##ex2_unmemoized(n)
     println("Evaluating...")
     return sum(sqrt, 1:n)
@@ -36,7 +36,15 @@ end
 	  </td>
 
 	  <td style="vertical-align:top" width="5000px">
-		<img class="fragment" data-fragment-index="3" src="resources/metaex.png">
+<pre style="font-size:14px"><span style="color:#00FF00"><b>julia&gt; </b></span>@time println(ex2(500_000_000))
+Evaluating...
+7.453559936179431e12
+  0.411703 seconds
+
+<span style="color:#00FF00"><b>julia&gt; </b></span>@time println(ex2(500_000_000))
+7.453559936179431e12
+  0.000042 seconds
+</pre>
 	  </td>
 	</tr>
   </tbody>

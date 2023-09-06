@@ -1,40 +1,36 @@
+<h3>Why is Julia <i style="color:rgb(255,60,78)">slow</i> ? (2)</h3>
+
+<p style="font-size: 29px;">JIT compilation: when first called a
+  function <b>specialize</b> on its arguments</p>
+
+
 <table>
   <tbody>
 	<tr>
-	  <td width="65%">
-		<div class="image-float">
-		  <p                                          style="position:relative; left: 0;   top: 0;"  ><img src="resources/typestab1.png" width="700px"/></p>
-		  <p class="fragment" data-fragment-index="1" style="position:absolute; left:20px; top:20px;"><img src="resources/typestab2.png" width="700px"/></p>
-		  <p class="fragment" data-fragment-index="2" style="position:absolute; left:40px; top:40px;"><img src="resources/typestab3.png" width="600px"/></p>
-		  <p class="fragment" data-fragment-index="3" style="position:absolute; left:60px; top:60px;"><img src="resources/typestab4.png" width="600px"/></p>
-		</div>
-	  </td>
-	  <td width="40%">
-		<h3>Why is Julia <i style="color:rgb(255,60,78)">slow</i> ? (2)</h3>
-		<p>The code must be <b>type stable</b>, check with <code>@code_warntype</code></p>
-		<ul>
-		  <li class="fragment" data-fragment-index="0" style="color:rgb(255,191,0)"><code>myfun(3.2)</code> is type stable</li>
-		  <li class="fragment" data-fragment-index="1" style="color:rgb(255,60,78)"><code>myfun(3)</code> is not!</li>
-		  <li class="fragment" data-fragment-index="2">Huge impact on performances</li>
-		</ul>
+	  <td width="70%">
 
-		<div class="fragment" data-fragment-index="3">Improved version:
-<pre><code data-trim data-noescape>
-function myfun(x)
-    y = x
-    if x < <mark>zero(x)</mark>
-        y = <mark>zero(x)</mark>
-    end
-    return y * y
-end
-</code></pre>
-		</div>
+<pre><span style="color:#00FF00"><b>julia&gt; </b></span>@time using Gnuplot
+  0.513904 seconds
+
+<span style="color:#00FF00"><b>julia&gt; </b></span>@time using Gnuplot
+  0.000075 seconds
+
+<span style="color:#00FF00"><b>julia&gt; </b></span>@time @gp 1:9
+  0.620262 seconds
+
+<span style="color:#00FF00"><b>julia&gt; </b></span>@time @gp 1:9
+  0.007126 seconds
+</pre>
+
+	  </td>
+	  <td>
+		<div class="fragment" data-fragment-index="2" style="background:rgba(0,0,50,0.2)">
+		  <ul>
+			<li class="fragment" data-fragment-index="2" style="color:rgb(255,191,0);">require <i>warm up</i>!</li>
+			<li class="fragment" data-fragment-index="3" style="color:rgb(255,191,0);">Module compilation takes
+			  $\sim$seconds</li>
+		  </ul>
 	  </td>
 	</tr>
   </tbody>
 </table>
-
-
-
-
-

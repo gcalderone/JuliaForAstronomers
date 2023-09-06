@@ -1,27 +1,32 @@
 <h2>Simplistic benchmarks</h2>
-<h3><i>vectorized & parallel</i></h3>
+<h3><i>parallel</i></h3>
 
 <table>
   <tbody>
     <tr>
       <td width="50%" style="vertical-align: top">
-Julia:
+Multi-process:
 <pre><code data-trim data-noescape>
 #-----------------------------------------
-function ex2(n)
-    return sum(sqrt, 1:n)
+using Distributed
+function ex4(n)
+    return <mark>@distributed (+)</mark> for i = 1:n
+        sqrt(float(i))
+    end
 end
 
-dummy = ex2(2)
-@time println(ex2(500_000_000))
+if myid() == 1
+    dummy = ex4(5)  # warm-up
+    @time println(ex4(500_000_000))
+end
 </code></pre>
       </td>
       <td width="50%" style="vertical-align: top">
-Julia:
+Multi-thread:
 <pre><code data-trim data-noescape>
 #-----------------------------------------
 using Base.Threads
-function ex4(n)
+function ex5(n)
     arr = fill(0., nthreads())
    <mark>@threads</mark> for i = 1:n   
         arr[threadid()] += sqrt(float(i))
@@ -29,8 +34,8 @@ function ex4(n)
     return sum(arr)
 end  
 
-dummy = ex4(10)
-@time println(ex4(500_000_000))
+dummy = ex5(5)  # warm-up
+@time println(ex5(500_000_000))
 </code></pre>
       </td>
 
@@ -38,16 +43,16 @@ dummy = ex4(10)
     <tr>
       <td>
 <pre><code data-trim data-noescape>
-$ julia ex2.jl
-7.453559936179431e12
-  0.812721 seconds
+$ julia -p 4 ex4.jl
+7.453559936179548e12
+0.221538 seconds
 </code></pre>
       </td>
       <td>
 <pre><code data-trim data-noescape>
-$ <mark>JULIA_NUM_THREADS=4</mark> julia ex4.jl
+$ <mark>JULIA_NUM_THREADS=4</mark> julia ex5.jl
 7.453559936180016e12
-  0.417712 seconds
+  0.327335 seconds
 </code></pre>
       </td>
     </tr>

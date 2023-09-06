@@ -1,0 +1,71 @@
+<table>
+  <tbody>
+	<tr>
+	  <td width="65%">
+
+
+<pre><span style="color:#00FF00"><b>julia&gt; </b></span>x = 10
+10
+
+<span style="color:#00FF00"><b>julia&gt; </b></span>function f()
+     s = 0
+     for val in x
+       s = s + val
+     end
+     return s
+end
+f (generic function with 1 method)
+
+<span style="color:#00FF00"><b>julia&gt; </b></span>@code_warntype f()
+MethodInstance for f()
+  from f()<span style="color:#7F7F7F"> @</span> <span style="color:#7F7F7F">Main</span> <span style="color:#7F7F7F"><u style="text-decoration-style:single">REPL[2]:1</u></span>
+Arguments
+  #self#<span style="color:#00CDCD">::Core.Const(f)</span>
+Locals
+  @_2<span style="color:#FF0000"><b>::Any</b></span>
+  s<span style="color:#FF0000"><b>::Any</b></span>
+  val<span style="color:#FF0000"><b>::Any</b></span>
+Body<span style="color:#FF0000"><b>::Any</b></span>
+<span style="color:#7F7F7F">1 ─</span>       (s = 0)
+<span style="color:#7F7F7F">│  </span> %2  = Main.x<span style="color:#FF0000"><b>::Any</b></span>
+<span style="color:#7F7F7F">│  </span>       (@_2 = Base.iterate(%2))
+<span style="color:#7F7F7F">│  </span> %4  = (@_2 === nothing)<span style="color:#00CDCD">::Bool</span>
+<span style="color:#7F7F7F">│  </span> %5  = Base.not_int(%4)<span style="color:#00CDCD">::Bool</span>
+<span style="color:#7F7F7F">└──</span>       goto #4 if not %5
+<span style="color:#7F7F7F">2 ┄</span> %7  = @_2<span style="color:#FF0000"><b>::Any</b></span>
+<span style="color:#7F7F7F">│  </span>       (val = Core.getfield(%7, 1))
+<span style="color:#7F7F7F">│  </span> %9  = Core.getfield(%7, 2)<span style="color:#FF0000"><b>::Any</b></span>
+<span style="color:#7F7F7F">│  </span>       (s = s + val)
+<span style="color:#7F7F7F">│  </span>       (@_2 = Base.iterate(%2, %9))
+<span style="color:#7F7F7F">│  </span> %12 = (@_2 === nothing)<span style="color:#00CDCD">::Bool</span>
+<span style="color:#7F7F7F">│  </span> %13 = Base.not_int(%12)<span style="color:#00CDCD">::Bool</span>
+<span style="color:#7F7F7F">└──</span>       goto #4 if not %13
+<span style="color:#7F7F7F">3 ─</span>       goto #2
+<span style="color:#7F7F7F">4 ┄</span>       return s
+</pre>
+
+	  </td>
+	  <td width="40%">
+		<h3>Why is Julia <i style="color:rgb(255,60,78)">slow</i> ? (1)</h3>
+		<p>The code must be <b>type stable</b>, check with <code>@code_warntype</code></p>
+		<ul>
+		  <li style="color:rgb(255,60,78)"><code>f()</code> is not stable!</li>
+		  <li>May have impact on performances</li>
+		</ul>
+
+		<div class="fragment" data-fragment-index="1">Improved version (function barrier):
+<pre><code data-trim data-noescape>
+function f(x)
+     s = 0
+     for val in x
+       s = s + val
+     end
+     return s
+end
+f(x)
+</code></pre>
+		</div>
+	  </td>
+	</tr>
+  </tbody>
+</table>

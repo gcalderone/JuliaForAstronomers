@@ -25,20 +25,20 @@ end
 </code></pre>
 <p class="fragment" data-fragment-index="6" style="color:rgb(0,255,138);">
 Native code:<br>
-<pre><code class="fragment" data-fragment-index="6" data-trim data-noescape>
-julia> <mark>@code_native</mark> myfun(3.2)
-.text
-vxorpd	%xmm1, %xmm1, %xmm1
-vmaxsd	%xmm0, %xmm1, %xmm0
-vmulsd	%xmm0, %xmm0, %xmm0
-retq
-nopl	(%rax)
-</code></pre>
+<pre code class="fragment" data-fragment-index="6"><span style="color:#00FF00"><b>julia&gt; </b></span>@code_native myfun(3.2)
+	<span style="color:#00FFFF"><b>pushq</b></span>	%rbp
+	<span style="color:#00FFFF"><b>movq</b></span>	%rsp, %rbp
+	<span style="color:#00FFFF"><b>vxorpd</b></span>	%xmm1, %xmm1, %xmm1
+	<span style="color:#00FFFF"><b>vmaxsd</b></span>	%xmm0, %xmm1, %xmm0
+	<span style="color:#00FFFF"><b>vmulsd</b></span>	%xmm0, %xmm0, %xmm0
+	<span style="color:#00FFFF"><b>popq</b></span>	%rbp
+	<span style="color:#00FFFF"><b>retq</b></span>
+</pre>
 	  </p>
 	  </td>
  	  <td width="65%" style="vertical-align: top; font-size:23px;">
 		<ul>
-		  <li class="fragment" data-fragment-index="2">Julia has a very sophisticated type
+		  <li class="fragment" data-fragment-index="2">Julia has a sophisticated type
 		  system, but its use is not necessary to achieve good
 		  performances<br>
 		  <pre><code data-trim data-noescape>
@@ -51,21 +51,24 @@ Float64
 			<b style="color:rgb(255,191,0)"> $\Rightarrow$ <code>myfun(3.2)</code> and <code>myfun(3)</code> run different code!</b>
 		  </li>
           <li class="fragment" data-fragment-index="5">Julia allows to inspect the type-annotated code:
-		  <pre style="font-size:13px;"><code data-trim data-noescape>
-julia> @code_warntype myfun(3.2)
-Variables
-  #self#::Core.Compiler.Const(myfun, false)
-  x::Float64
-  y::Float64
 
-Body::Float64
-1 ─      (y = x)
-│   %2 = (x < 0)::Bool
-└──      goto #3 if not %2
-2 ─      (y = 0.0)
-3 ┄ %5 = (y * y)::Float64
-└──      return %5
-</code></pre>
+<pre background="black"><span style="color:#00FF00"><b>julia&gt; </b></span>@code_warntype myfun(3.2)
+MethodInstance for myfun(::Float64)
+  from myfun(<span style="color:#7F7F7F">x</span>)<span style="color:#7F7F7F"> @</span> <span style="color:#7F7F7F">Main</span> <span style="color:#7F7F7F"><u style="text-decoration-style:single">REPL[1]:1</u></span>
+Arguments
+  #self#<span style="color:#00CDCD">::Core.Const(myfun)</span>
+  x<span style="color:#00CDCD">::Float64</span>
+Locals
+  y<span style="color:#00CDCD">::Float64</span>
+Body<span style="color:#00CDCD">::Float64</span>
+<span style="color:#7F7F7F">1 ─</span>      (y = x)
+<span style="color:#7F7F7F">│  </span> %2 = (x &lt; 0)<span style="color:#00CDCD">::Bool</span>
+<span style="color:#7F7F7F">└──</span>      goto #3 if not %2
+<span style="color:#7F7F7F">2 ─</span>      (y = 0.0)
+<span style="color:#7F7F7F">3 ┄</span> %5 = (y * y)<span style="color:#00CDCD">::Float64</span>
+<span style="color:#7F7F7F">└──</span>      return %5
+</pre>
+
 <b class="fragment" data-fragment-index="5" style="color:rgb(255,191,0)">  $\Rightarrow$ all types are known, code can be optimized!</b>
           </li>
 		</ul>

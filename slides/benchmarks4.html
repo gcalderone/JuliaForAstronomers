@@ -1,36 +1,32 @@
 <h2>Simplistic benchmarks</h2>
-<h3><i>vectorized & parallel</i></h3>
+<h3><i>vectorized</i></h3>
 
 <table>
   <tbody>
     <tr>
       <td width="50%" style="vertical-align: top">
-Julia:
+Simplistic:
 <pre><code data-trim data-noescape>
 #-----------------------------------------
 function ex2(n)
-    return sum(sqrt, 1:n)
+    # Note the `.` after `sqrt`
+    return sum(sqrt.(1:n))
 end
 
-dummy = ex2(2)
+dummy = ex2(5)  # warm-up
 @time println(ex2(500_000_000))
 </code></pre>
       </td>
       <td width="50%" style="vertical-align: top">
-Julia:
+Improved memory usage:
 <pre><code data-trim data-noescape>
 #-----------------------------------------
-using Distributed
 function ex3(n)
-    return <mark>@distributed (+)</mark> for i = 1:n
-        sqrt(float(i))
-    end
+    return sum(sqrt, 1:n)
 end
 
-if myid() == 1
-    dummy = ex3(10)
-    @time println(ex3(500_000_000))
-end
+dummy = ex2(5)  # warm-up
+@time println(ex2(500_000_000))
 </code></pre>
       </td>
     </tr>
@@ -39,14 +35,14 @@ end
 <pre><code data-trim data-noescape>
 $ julia ex2.jl
 7.453559936179431e12
-  0.812721 seconds
+  0.844752 seconds
 </code></pre>
       </td>
       <td>
 <pre><code data-trim data-noescape>
-$ julia <mark>-p 4</mark> ex3.jl
-7.453559936179548e12
-  0.267411 seconds
+$ julia ex3.jl
+7.453559936179431e12
+  0.386577 seconds
 </code></pre>
       </td>
     </tr>

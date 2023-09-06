@@ -36,7 +36,7 @@ function ex1(n)
     return sum
 end
 
-dummy = ex1(2)
+dummy = ex1(5) # warm-up
 @time println(ex1(500_000_000))
 </code></pre>
       </td>
@@ -44,16 +44,17 @@ dummy = ex1(2)
     <tr>
       <td>
 <pre><code data-trim data-noescape>
+$ gcc ex1.c <mark>-O3</mark> -lm -o ex1
 $ time ./ex1
 7453559936179.851562
-real    0m2.399s
+real    0m0.760s
 </code></pre>
       </td>
       <td>
 <pre><code data-trim data-noescape>
 $ julia ex1.jl
 7.453559936179852e12
-  0.805813 seconds
+  0.775333 seconds
 </code></pre>
       </td>
     </tr>

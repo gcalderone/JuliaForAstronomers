@@ -1,0 +1,37 @@
+<h2>Multiple dispatch: example</h2>
+<h3>Great circle distances</h3>
+
+<table width="100%">
+  <tbody>
+	<tr>
+	  <td style="vertical-align: top">
+		Python:
+<pre><code data-trim data-noescape>
+import astropy.units as u
+from astropy.coordinates import SkyCoord
+
+c1 = SkyCoord('5h23m34.5s', '-69d45m22s', frame='icrs')
+c2 = SkyCoord('0h52m44.8s', '-72d49m43s', frame='fk5')
+sep = c1.separation(c2)  # compare to 5.subtract(2)
+sep
+# 20.74611448 deg
+</code></pre>
+	  </td>
+	</tr>
+	<tr>
+	  <td style="vertical-align: top">
+Julia:
+<pre><code data-trim data-noescape>
+using AstroAngles, SkyCoords
+
+c1 = ICRSCoords(hms"05:23:34.5", dms"-69:45:22")
+c2 = FK5Coords{2000}(hms"00:52:44.8", dms"-72:49:43")
+
+separation(c1, c2) |> rad2deg  # compare to subtract(2, 5)
+# 20.746114476043967
+</code></pre>
+	  </td>
+	</tr>
+  </tbody>
+</table>
+

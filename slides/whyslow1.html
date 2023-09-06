@@ -1,22 +1,64 @@
-<h3>Why is Julia <i style="color:rgb(255,60,78)">slow</i> ? (1)</h3>
-
-<p style="font-size: 29px;">JIT compilation: when first called a
-  function <b>specialize</b> on its arguments</p>
-
-
 <table>
   <tbody>
 	<tr>
-	  <td width="70%">
-		<img src="resources/repl1.png">
+	  <td width="65%">
+
+<pre>
+<span style="color:#00FF00"><b>julia&gt; </b></span>@code_warntype myfun(3.2)
+MethodInstance for myfun(::Float64)
+  from myfun(<span style="color:#7F7F7F">x</span>)<span style="color:#7F7F7F"> @</span> <span style="color:#7F7F7F">Main</span> <span style="color:#7F7F7F"><u style="text-decoration-style:single">REPL[1]:1</u></span>
+Arguments
+  #self#<span style="color:#00CDCD">::Core.Const(myfun)</span>
+  x<span style="color:#00CDCD">::Float64</span>
+Locals
+  y<span style="color:#00CDCD">::Float64</span>
+Body<span style="color:#00CDCD">::Float64</span>
+<span style="color:#7F7F7F">1 ─</span>      (y = x)
+<span style="color:#7F7F7F">│  </span> %2 = (x &lt; 0)<span style="color:#00CDCD">::Bool</span>
+<span style="color:#7F7F7F">└──</span>      goto #3 if not %2
+<span style="color:#7F7F7F">2 ─</span>      (y = 0.0)
+<span style="color:#7F7F7F">3 ┄</span> %5 = (y * y)<span style="color:#00CDCD">::Float64</span>
+<span style="color:#7F7F7F">└──</span>      return %5
+
+
+<span style="color:#00FF00"><b>julia&gt; </b></span>@code_warntype myfun(3)
+MethodInstance for myfun(::Int64)
+  from myfun(<span style="color:#7F7F7F">x</span>)<span style="color:#7F7F7F"> @</span> <span style="color:#7F7F7F">Main</span> <span style="color:#7F7F7F"><u style="text-decoration-style:single">REPL[1]:1</u></span>
+Arguments
+  #self#<span style="color:#00CDCD">::Core.Const(myfun)</span>
+  x<span style="color:#00CDCD">::Int64</span>
+Locals
+  y<span style="color:#FFFF00"><b>::Union{Float64, Int64}</b></span>
+Body<span style="color:#FFFF00"><b>::Union{Float64, Int64}</b></span>
+<span style="color:#7F7F7F">1 ─</span>      (y = x)
+<span style="color:#7F7F7F">│  </span> %2 = (x &lt; 0)<span style="color:#00CDCD">::Bool</span>
+<span style="color:#7F7F7F">└──</span>      goto #3 if not %2
+<span style="color:#7F7F7F">2 ─</span>      (y = 0.0)
+<span style="color:#7F7F7F">3 ┄</span> %5 = (y * y)<span style="color:#FFFF00"><b>::Union{Float64, Int64}</b></span>
+<span style="color:#7F7F7F">└──</span>      return %5
+		</pre>
+
 	  </td>
-	  <td>
-		<div class="fragment" data-fragment-index="2" style="background:rgba(0,0,50,0.2)">
-		  <ul>
-			<li class="fragment" data-fragment-index="2" style="color:rgb(255,191,0);">require <i>warm up</i>!</li>
-			<li class="fragment" data-fragment-index="3" style="color:rgb(255,191,0);">Module compilation takes
-			  $\sim$tens of seconds</li>
-		  </ul>
+	  <td width="50%">
+		<h3>Why is Julia <i style="color:rgb(255,60,78)">slow</i> ? (1)</h3>
+		<p>The code must be <b>type stable</b>, check with <code>@code_warntype</code></p>
+		<ul>
+		  <li class="fragment" data-fragment-index="0" style="color:rgb(255,191,0)"><code>myfun(3.2)</code> is type stable</li>
+		  <li class="fragment" data-fragment-index="1" style="color:rgb(255,60,78)"><code>myfun(3)</code> is not!</li>
+		  <li class="fragment" data-fragment-index="1">May have impact on performances</li>
+		</ul>
+
+		<div class="fragment" data-fragment-index="2">Improved version:
+<pre><code data-trim data-noescape>
+function myfun(x)
+    y = x
+    if x < <mark>zero(x)</mark>
+        y = <mark>zero(x)</mark>
+    end
+    return y * y
+end
+</code></pre>
+		</div>
 	  </td>
 	</tr>
   </tbody>
